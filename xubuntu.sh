@@ -6,6 +6,7 @@
 sudo apt-get install -y ttf-mscorefonts-installer --quiet
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 # cp -r ~/dotfiles/.fonts/  ~/.fonts/
+sudo apt install -y fonts-open-sans fonts-roboto
 
 # install icons
 
