@@ -2,8 +2,6 @@
 
 # Xubuntu config and installs
 
-sudo apt install plank
-
 # install fonts
     sudo apt-get install -y ttf-mscorefonts-installer --quiet
     echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
@@ -14,6 +12,14 @@ sudo apt install plank
 sudo add-apt-repository ppa:papirus/papirus
 sudo apt-get update
 sudo apt-get install papirus-icon-theme libreoffice-style-papirus
+
+# stilo themes
+sudo apt install -y git
+git clone https://github.com/lassekongo83/stilo-themes.git
+cd stilo-themes
+meson build
+sudo ninja -C build -y install
+
 
 # install launcher
 
