@@ -1,13 +1,14 @@
 #!/bin/bash
 
+# updates
 function up() {
+    sudo apt clean
     sudo apt update
     sudo apt upgrade -y
     sudo apt autoremove -y
     }
 
 # common
-
 function install_common() {
     sudo apt install -y \
         build-essential \
@@ -94,6 +95,27 @@ function install_java8() {
     sudo apt update
     sudo apt install -y openjdk-8-jdk
     }
+
+#postman
+function install_postman() {
+	cd /tmp && wget https://dl.pstmn.io/download/latest/linux64 -O postman-linux-x64.tar.gz
+	sudo tar -xvzf postman-linux-x64.tar.gz -C /opt
+	mkdir ~/.local/share/applications && touch ~/.local/share/applications/postman2.desktop
+	cat << EOF > ~/.local/share/applications/postman2.desktop
+	[Desktop Entry]
+	Name=Postman
+	GenericName=API Client
+	X-GNOME-FullName=Postman API Client
+	Comment=Make and view REST API calls and responses
+	Keywords=api;
+	Exec=/opt/Postman/Postman
+	Terminal=false
+	Type=Application
+	Icon=/opt/Postman/app/resources/app/assets/icon.png
+	Categories=Development;Utilities;
+	EOF
+	sudo ln -s /opt/Postman/Postman /usr/bin/postman
+}
 
 # pycharm
 function install_pycharm() {
