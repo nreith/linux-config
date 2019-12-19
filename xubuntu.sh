@@ -22,15 +22,6 @@ cd stilo-themes
 meson build
 sudo ninja -C build -y install
 
-
-# install launcher
-
-sudo apt install synapse
-
-# STUCK HERE. Need to finish getting autoplank working. It runs.
-
-# plank and autoplank
-sudo apt install -y plank
-sudo apt install -y golang-go xdotool dconf-cli
-cd /tmp && git clone https://github.com/abiosoft/autoplank.git
-cd autoplank && go build -o autoplank && sudo mv autoplank /usr/local/bin
+# app and ds installs
+cd /tmp && https://raw.githubusercontent.com/nreith/linux_config/master/installs.sh
+source installs.sh
