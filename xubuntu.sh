@@ -7,7 +7,8 @@ sudo apt-get install -y ttf-mscorefonts-installer --quiet
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 # cp -r ~/dotfiles/.fonts/  ~/.fonts/
 sudo apt install -y fonts-open-sans fonts-roboto
-
+cd /tmp && wget https://raw.githubusercontent.com/nreith/linux_config/master/googlefonts.sh
+sudo bash googlefonts.sh
 # install icons
 
 sudo add-apt-repository ppa:papirus/papirus
