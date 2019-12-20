@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name[en_US]=quicktile
+Comment[en_US]=quicktile --daemonize
+Exec=quicktile --daemonize
+Icon=application-default-icon
+X-GNOME-Autostart-enabled=true
+Type=Application

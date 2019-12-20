@@ -1,0 +1,15 @@
+{
+    "gap": 12,
+    "displayEdgeGap": 6,
+  
+    "bindings": {
+      "cmd+shift+u": "TopLeft",
+      "cmd+shift+i": "Top",
+      "cmd+shift+o": "TopRight",
+      "cmd+shift+j": "Left",
+      "cmd+shift+k": "Middle",
+      "cmd+shift+l": "Right",
+      "cmd+shift+m": "BottomLeft",
+      "cmd+shift+,": "Bottom",
+      "cmd+shift+.": "BottomRight"
+    }

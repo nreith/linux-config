@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Get path function needed here.
+
+# Elementary OS Post-Installation Script
+
+sudo apt-get remove epiphany-browser
+
+# Turn off natural scrolling for trackpad
+
+# elementary tweaks
+    sudo apt install software-properties-common
+    sudo add-apt-repository ppa:philip.scott/elementary-tweaks
+    sudo apt-get update
+    sudo apt install elementary-tweaks
+
+    sudo apt-get remove epiphany
+
+# install fonts
+    sudo apt-get install -y ttf-mscorefonts-installer --quiet
+    echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+    # cp -r ~/dotfiles/.fonts/  ~/.fonts/
+
+#1. OS tweaks
+
+ # - Turn off trackpad naturall scrolling
+ # - 
+ # - 
+    gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'Transparent'
+    gsettings set org.pantheon.desktop.gala.appearance button-layout 'windows'
+    gsettings set org.gnome.mutter overlay-key "'Super_L'"
+    gsettings set org.pantheon.desktop.gala.behavior overlay-action "'wingpanel --toggle-indicator=app-launcher'"
+
+#2. # iconsd 
+    sudo add-apt-repository ppa:papirus/papirus
+    sudo apt-get update
+    sudo apt-get install papirus-icon-theme
+    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+
+#3. Quicktile
+    sudo apt install python-gtk2 python-xlib python-pip libpango1.0-0
+    wget http://ftp.br.debian.org/debian/pool/main/g/gnome-python-desktop/python-wnck_2.32.0+dfsg-3_amd64.deb
+    sudo dpkg -i python-wnck_2.32.0+dfsg-3_amd64.deb 
+    sudo -H pip2 install https://github.com/ssokolow/quicktile/archive/master.zip
+    # Fix bugs/dependencies
+    sudo apt install libcanberra-gtk-module libcanberra-gtk3-module gtk2-engines-pixbuf
+
+    cp configs/quicktile.cfg ~/.config/
+    cp configs/quicktile.desktop ~/.config/autostart/
+
+    # Fix window shadows on native apps
+    echo ".window-frame {box-shadow: none; margin: 0;}" >> ~/.config/gtk-3.0/gtk.css
+
+# Darwintiler
+    sudo apt install nim libx11-dev
+    cd /tmp && git clone https://github.com/veryjos/darwintiler.git
+    cd darwintiler && make release
+    sudo mv build/darwintiler /usr/local/bin/
+    cp ~/repos/linux_config/configs/.darwintiler.json ~/
+
+
+
+#4. guake
+    sudo apt install -y guake
+    cp configs/guake.desktop ~/.config/autostart
