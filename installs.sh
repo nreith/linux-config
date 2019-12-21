@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # updates
-function up() {
+function updates() {
     sudo apt clean
     sudo apt update
     sudo apt upgrade -y
