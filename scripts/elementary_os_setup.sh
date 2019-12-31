@@ -44,19 +44,5 @@ sudo apt-get remove epiphany-browser
 #4. App Installs
 
 cd /tmp
-wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/installs.sh
-source installs.sh
-
-# installs
-updates
-install_common
-install_anaconda3
-install_azdatastudio
-install_dbeaver
-install_docker
-install_java8
-install_pycharm
-install_spotify
-install_sublimetext
-install_vscode
-cleanup
+wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/nick_installs.sh
+sudo bash nick_installs.sh
