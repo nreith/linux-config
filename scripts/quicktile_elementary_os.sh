@@ -79,10 +79,13 @@ old=$(< /tmp/old.txt)
 new=$(< /tmp/new.txt)
 
 # Replace conf file with new text instead of old
-echo "${contents/$old/$new}" > gtk-widgets.css
+echo "${contents/$old/$new}" > /tmp/gtk-widgets.css
+sudo mv /tmp/gtk-widgets.css /usr/share/themes/elementary/gtk-3.0/
 
 # Clean up tmp files
 rm /tmp/old.txt /tmp/new.txt
+
+cd ~/
 
 # Run quicktile once to generate config
 quicktile
