@@ -1,5 +1,60 @@
 #!/bin/bash
 
+# About this script:
+####################
+
+# One huge script to make it easy to install anything for DevOps/Data Science
+# As well as some other commonly used desktop applications
+# Known to work on Ubuntu 18.04 and derivatives
+# (Ubuntu Server, Xubuntu, Lubuntu, Mate, Budgie, Pop!OS 18.04, Elementary OS 5.1 Hera, etc.)
+
+# Usage:
+########
+
+# Paste the command below (without /* and */ into your command line)
+# Then type one or more of the commands below in the index.
+
+/*
+cd /tmp
+wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh
+source install_functions.sh
+*/
+
+# Index:
+########
+
+# Pay attention to notes here, and run the code inside functions manually if you want to make alterations
+
+updates
+	# updates, upgrades, cleans up, etc. - run this first
+install_common
+	# lots of commonly used things like browsers, etc.
+install_anaconda3
+	# Anaconda3-2019.10-Linux-x86_64.sh - also updates "conda" and "anaconda" to latest
+install_azdatastudio
+	# Azure Data Studio - my favorite SQL editor - only works with MS SQL Server
+install_chrome
+	# Gets real Google Chrome browser, not chromium-browser, the open-source knock-off
+install_dbeaver
+	# Dbeaver CE, the free community edition of the best multi-SQl, cross-platform SQL editor. Works with any SQL flavor
+install_docker
+	# Docker - Note, this script enables sudo-less docker use so you don't have to type "sudo" for every docker command.
+install_freeoffice
+	# Free Office - A better, more Microsoft Office compatible version of Open Office. They split a while back over open-source purity
+install_java8
+	# Java 8 - Still required by lots of things, even though it's old and we're on version 11.
+	# I use openjdk because Oracle no longer allows you to download the file without a pain. Haven't noticed a difference.
+install_postman
+	# Some Ubuntu-based distros have Postman in the app store. In case they don't, here you go
+install_spotify
+	# Can't work without some tunes
+install_vbox_vagrant
+	# Virtualbox + vagrant for scripting VMs
+install_vmware_vagrant
+	# VMWare Workstation Player plus vagrant for scripting VMs - Free version = only 1 VM on at a time
+
+##############################################################################################################
+
 # updates
 function updates() {
     sudo apt clean
@@ -37,6 +92,8 @@ function install_anaconda3() {
     sudo chown -R $USER:$USER /opt/anaconda3
     echo 'export PATH=$PATH:/opt/anaconda3/bin' >> ~/.bashrc
     source ~/.bashrc
+    conda update conda
+    conda update anaconda
     }
 
 # Azure Data Studio
@@ -138,7 +195,14 @@ function install_sublimetext() {
     }
 
 function install_vbox_vagrant() {
-    vagrant virtualbox dkms
+    virtualbox vagrant dkms
+    }
+
+function install_vmware_vagrant() {
+    cd /tmp
+    wget https://download3.vmware.com/software/player/file/VMware-Player-15.5.1-15018445.x86_64.bundle
+    sudo bash VMWare-Player*.bundle
+    sudo apt-get install vagrant dkms
     }
 
 # vs code
