@@ -153,8 +153,10 @@ function install_vscode() {
 
 # clean up
 function cleanup() {
-    sudo apt -y autoclean
-    sudo apt -y autoremove
-    sudo apt -y autoclean
-    sudo rm -rf /tmp/*
+    sudo apt-get update 
+    sudo apt-get -y upgrade
+    sudo apt-get clean
+    sudo apt-get autoclean
+    sudo apt-get autoremove
+    sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
     }
