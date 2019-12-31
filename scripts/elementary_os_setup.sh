@@ -23,43 +23,40 @@ sudo apt-get remove epiphany-browser
 
 #1. OS tweaks
 
- # - Turn off trackpad naturall scrolling
- # - 
- # - 
+ # - Turn off trackpad naturall scrolling -manually. need to script
+ 
     gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'Transparent'
     gsettings set org.pantheon.desktop.gala.appearance button-layout 'windows'
     gsettings set org.gnome.mutter overlay-key "'Super_L'"
     gsettings set org.pantheon.desktop.gala.behavior overlay-action "'wingpanel --toggle-indicator=app-launcher'"
 
-#2. # iconsd 
+#2. # icons
     sudo add-apt-repository ppa:papirus/papirus
     sudo apt-get update
     sudo apt-get install papirus-icon-theme
     gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
 
 #3. Quicktile
-    sudo apt install python-gtk2 python-xlib python-pip libpango1.0-0
-    wget http://ftp.br.debian.org/debian/pool/main/g/gnome-python-desktop/python-wnck_2.32.0+dfsg-3_amd64.deb
-    sudo dpkg -i python-wnck_2.32.0+dfsg-3_amd64.deb 
-    sudo -H pip2 install https://github.com/ssokolow/quicktile/archive/master.zip
-    # Fix bugs/dependencies
-    sudo apt install libcanberra-gtk-module libcanberra-gtk3-module gtk2-engines-pixbuf
+    cd /tmp
+    wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/quicktile_elementary_os.sh
+    sudo bash quicktile_elementary _os.sh
 
-    cp configs/quicktile.cfg ~/.config/
-    cp configs/quicktile.desktop ~/.config/autostart/
+#4. App Installs
 
-    # Fix window shadows on native apps
-    echo ".window-frame {box-shadow: none; margin: 0;}" >> ~/.config/gtk-3.0/gtk.css
+cd /tmp
+wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/installs.sh
+source installs.sh
 
-# Darwintiler
-    sudo apt install nim libx11-dev
-    cd /tmp && git clone https://github.com/veryjos/darwintiler.git
-    cd darwintiler && make release
-    sudo mv build/darwintiler /usr/local/bin/
-    cp ~/repos/linux_config/configs/.darwintiler.json ~/
-
-
-
-#4. guake
-    sudo apt install -y guake
-    cp configs/guake.desktop ~/.config/autostart
+# installs
+updates
+install_common
+install_anaconda3
+install_azdatastudio
+install_dbeaver
+install_docker
+install_java8
+install_pycharm
+install_spotify
+install_sublimetext
+install_vscode
+cleanup
