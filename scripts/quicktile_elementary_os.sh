@@ -71,7 +71,7 @@ printf 'decoration {
 	box-shadow: none;
 	border: none;
 	padding: 0;
-	margin: 0;
+	margin: 1;
 }' > /tmp/new.txt
 
 contents=$(< gtk-widgets.css)
