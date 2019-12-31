@@ -14,7 +14,7 @@
 
 # Install quicktile dependencies
 
-sudo apt-get install python python-gtk2 python-xlib python-dbus python-setuptools
+sudo apt-get install -y python python-gtk2 python-xlib python-dbus python-setuptools
 
 # One dependency (python-wnck) that is python 2.7 is no longer available for 18.04,
 # so need to temporarily add 17.10 Ubuntu repos and install it
@@ -24,13 +24,13 @@ sudo sh -c "echo 'deb http://old-releases.ubuntu.com/ubuntu/ artful-updates main
 sudo sh -c "echo 'deb http://old-releases.ubuntu.com/ubuntu/ artful-backports main restricted universe multiverse' >> /etc/apt/sources.list.d/wnck.list"
 sudo sh -c "echo 'deb http://old-releases.ubuntu.com/ubuntu artful-security main restricted universe multiverse' >> /etc/apt/sources.list.d/wnck.list"
 sudo apt update
-sudo apt install python-wnck
+sudo apt install-y python-wnck
 
 # Clean up some junk so you don't end up with other 17.10 dependencies
 sudo rm /etc/apt/sources.list.d/wnck.list
 sudo rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 sudo apt-get update 
-sudo apt-get upgrade # might as well
+sudo apt-get -y upgrade # might as well
 sudo apt-get clean
 sudo apt-get autoclean
 sudo apt-get autoremove
@@ -39,7 +39,7 @@ sudo apt-get autoremove
 sudo pip2 install https://github.com/ssokolow/quicktile/archive/master.zip
 
 # Get rid of error message about libcanberra-gtk something something
-sudo apt install libcanberra-gtk-module
+sudo apt install -y libcanberra-gtk-module
 
 # Get rid of error message: Gtk-Message: 11:39:02.795: Failed to load module "pantheon-filechooser-module"
 # There are numerous posts about this: Here's one example: https://askubuntu.com/questions/684169/gtk-message-failed-to-load-module-pantheon-filechooser-module
@@ -47,7 +47,7 @@ echo "export GTK_MODULES=:gail:atk-bridge" >> ~/.bashrc # removes ":pantheon-fil
 source ~/.bashrc
 
 # Get rid of error message about pixbuf
-sudo apt-get install gnome-themes-standard
+sudo apt-get install -y gnome-themes-standard
 
 # Fix stupid Pantheon/Elementary issue where Elementary apps have huge invisible window borders around them with quicktile
 # As a side-benefit, this also fixes the same issue if you want to use i3 (for example, regolith-desktop) as a window
