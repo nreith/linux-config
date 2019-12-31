@@ -95,7 +95,7 @@ sed -i 's/^KP\_//g' ~/.config/quicktile.cfg
 # Oh, and a quick fix because it doesn't like the "Enter" shortcut for monitor-switch
 # now that it's not the keypad enter button
 # Now ctrl+alt+space switches the window to another monitor
-sed -i 's/^Enter /Space /g' ~/.config/quicktile.cfg
+sed -i 's/^Enter /space /g' ~/.config/quicktile.cfg
 
 # Phew. Almost done!
 # Just need to make quicktile startup automatically when you log in
