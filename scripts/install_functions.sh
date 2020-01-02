@@ -14,26 +14,26 @@
 # Paste the command below (without comment opener/closer into your command line)
 # Then type one or more of the commands below in the index.
 
-: ' INSTRUCTIONS
+<< 'INSTRUCTIONS'
 
 cd /tmp
 wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh
 source install_functions.sh
 
-'
+INSTRUCTIONS
 
 # Index:
 ########
 
 # Pay attention to notes here, and run the code inside functions manually if you want to make alterations
 
-: ' INDEX
+<< 'INDEX'
 
 run_updates
 	# updates, upgrades, cleans up, etc. - run this first
 run_cleanup
     # updates, upgrades, cleans, removes/autoremoves, and deletes temporary files and update lists
-    # Especially useful if you're using this in a dockerfile to minimize bloat. Run this at the end of every RUN statement/layer
+    # Especially useful if you\'re using this in a dockerfile to minimize bloat. Run this at the end of every RUN statement/layer
 config_locale_tz
     # Stuff to get the Bash shell to stop screaming at you
 
@@ -57,18 +57,18 @@ install_chrome
 install_dbeaver
 	# Dbeaver CE, the free community edition of the best multi-SQl, cross-platform SQL editor. Works with any SQL flavor
 install_docker
-	# Docker - Note, this script enables sudo-less docker use so you don't have to type "sudo" for every docker command.
+	# Docker - Note, this script enables sudo-less docker use so you don\'t have to type "sudo" for every docker command.
 install_freeoffice
 	# Free Office - A better, more Microsoft Office compatible version of Open Office. They split a while back over open-source purity
 install_java8
-	# Java 8 - Still required by lots of things, even though it's old and we're on version 11.
-	# I use openjdk because Oracle no longer allows you to download the file without a pain. Haven't noticed a difference.
+	# Java 8 - Still required by lots of things, even though it\'s old and we\'re on version 11.
+	# I use openjdk because Oracle no longer allows you to download the file without a pain. Haven\'t noticed a difference.
 install_postman
-	# Some Ubuntu-based distros have Postman in the app store. In case they don't, here you go
+	# Some Ubuntu-based distros have Postman in the app store. In case they don\'t, here you go
 install_pycharm
     # In case you prefer the PyCharm IDE
 install_spotify
-	# Can't work without some tunes
+	# Can\'t work without some tunes
 install_sublimetext
     # I like sublime as a light-weight text-editor, more powerful than gedit, but less than a full IDE like VS Code
 install_vbox_vagrant
@@ -76,9 +76,9 @@ install_vbox_vagrant
 install_vmware_vagrant
 	# VMWare Workstation Player + vagrant for scripting VMs - Free version = only 1 VM on at a time
 install_vscode
-    # My preferred text editor/IDE - It's the most popular currently, so I'm in good company
+    # My preferred text editor/IDE - It\'s the most popular currently, so I'm in good company
 
-'
+INDEX
 
 ##############################################################################################################
 
