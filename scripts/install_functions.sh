@@ -15,9 +15,11 @@
 # Then type one or more of the commands below in the index.
 
 << --INSTRUCTIONS--
+
 cd /tmp
 wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh
 source install_functions.sh
+
 --INSTRUCTIONS--
 
 # Index:
