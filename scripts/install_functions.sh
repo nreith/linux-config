@@ -14,16 +14,18 @@
 # Paste the command below (without comment opener/closer into your command line)
 # Then type one or more of the commands below in the index.
 
-<< --COMMENT--
+<< --INSTRUCTIONS--
 cd /tmp
 wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh
 source install_functions.sh
---COMMENT--
+--INSTRUCTIONS--
 
 # Index:
 ########
 
 # Pay attention to notes here, and run the code inside functions manually if you want to make alterations
+
+<< --INDEX--
 
 run_updates
 	# updates, upgrades, cleans up, etc. - run this first
@@ -74,6 +76,7 @@ install_vmware_vagrant
 install_vscode
     # My preferred text editor/IDE - It's the most popular currently, so I'm in good company
 
+--INDEX--
 
 ##############################################################################################################
 
