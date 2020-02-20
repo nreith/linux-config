@@ -17,7 +17,7 @@
 << 'INSTRUCTIONS'
 
 cd /tmp
-wget https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh
+wget "https://raw.githubusercontent.com/nreith/linux_config/master/scripts/install_functions.sh"
 source install_functions.sh
 
 INSTRUCTIONS
@@ -153,25 +153,25 @@ function install_common_cli() {
     sudo apt-get update
     sudo apt-get install -y --no-install-recommends \
         apt-utils \
-        bash-completion `so nice to have your thoughts finished for you` \
+        bash-completion \
         build-essential \
-        ca-certificates `auth stuff for ssl, etc.` \
-        curl wget `both for file downloads` \
-        dialog `useful user dialogs` \
-	    git `don\'t leave home without it` \
+        ca-certificates \
+        curl wget \
+        dialog \
+	git \
         gnupg \
-        file `recognizes filetype` \
-        iputils-ping `network testing` \
-        nano `easy command-line text editor` \
-        neovim `nicer than vim in my opinion` \ 
-        net-tools `ifconfig, etc.` \
-	    pass \
+        file \
+        iputils-ping \
+        nano \
+        neovim \ 
+        net-tools \
+	pass \
         python-pip \
-        rsync `to sync/backup files local or remote`\
-        screenfetch `show off your distro!` \
-        ssh openssh-server `work on your docker/server remotely` \
+        rsync \
+        screenfetch neofetch \
+        ssh openssh-server \
         ubuntu-restricted-extras \
-        zip unzip `pesky zip files`
+        zip unzip
     }
 
 
@@ -180,15 +180,15 @@ function config_locale_tz() {
     echo "Should automate lookup of this one day."
     sudo apt-get update
     sudo apt-get install -y  --no-install-recommends \
-        tzdata `time zones` \
-        locales `internationalization`
+        tzdata \
+        locales
     # Timezone / Locale stuff
-    ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime
-    dpkg-reconfigure --frontend noninteractive tzdata
-    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-    locale-gen en_US.UTF-8
-    update-locale LANG="en_US.UTF-8" LC_MESSAGES="POSIX"
-    dpkg-reconfigure --frontend noninteractive locales
+    sudo ln -fs /usr/share/zoneinfo/America/Chicago /etc/localtime
+    sudo dpkg-reconfigure --frontend noninteractive tzdata
+    sudo echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+    sudo locale-gen en_US.UTF-8
+    sudo update-locale LANG="en_US.UTF-8" LC_MESSAGES="POSIX"
+    sudo dpkg-reconfigure --frontend noninteractive locales
 }
 
 
@@ -201,17 +201,17 @@ function install_minimal_cli() {
     sudo apt-get update
     sudo apt-get install -y --no-install-recommends \
         apt-utils \
-        bash-completion `so nice to have your thoughts finished for you` \
+        bash-completion \
         build-essential \
-        ca-certificates `auth stuff for ssl, etc.` \
-        curl wget `both for file downloads` \
-        dialog `useful user dialogs` \
-	    git `don\'t leave home without it` \
-        nano `easy command-line text editor` \
+        ca-certificates \
+        curl wget \
+        dialog \
+	git \
+        nano \
         python-pip \
-        ssh openssh-server `work on your docker/server remotely` \
+        ssh openssh-server \
         ubuntu-restricted-extras \
-        zip unzip `pesky zip files`
+        zip unzip
 }
 
 
@@ -220,12 +220,12 @@ function install_anaconda3() {
     echo "You use Python too? Python 3 I hope!"
     echo "Note that we're installing in /opt/anaconda3 instead of /home/youruser/anaconda3"
     echo "This makes it available to everyone in multi-user situations."
-    cd /tmp && wget https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh -O Anaconda3-2019.10-Linux-x86_64.sh
+    cd /tmp && wget "https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh -O Anaconda3-2019.10-Linux-x86_64.sh"
     echo "46d762284d252e51cd58a8ca6c8adc9da2eadc82c342927b2f66ed011d1d8b53" Anaconda3-2019.10-Linux-x86_64.sh | sha256sum -c -
     sudo mkdir /opt/anaconda3
     bash Anaconda3-2019.10-Linux-x86_64.sh -b /opt/anaconda3
     sudo chown -R $USER:$USER /opt/anaconda3
-    echo 'export PATH=$PATH:/opt/anaconda3/bin' >> ~/.bashrc
+    echo "export PATH=$PATH:/opt/anaconda3/bin" >> ~/.bashrc
     source ~/.bashrc
     conda update conda
     conda update anaconda
@@ -250,6 +250,7 @@ function install_docker() {
     sudo apt-get update
     sudo apt-get install -y docker-ce
     sudo usermod -aG docker $USER
+    sudo newgrp docker
     }
 
 
@@ -264,7 +265,7 @@ function install_ms_mlserver_9.4.7() {
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
     # Set the location of the package repo the "prod" directory containing the distribution.
     # This example specifies 16.04. Replace with 14.04 if you want that version
-    wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+    wget "https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
     # Register the repo
     sudo dpkg -i packages-microsoft-prod.deb
     # Verify whether the "microsoft-prod.list" configuration file exists
@@ -282,7 +283,7 @@ function install_ms_mlserver_9.4.7() {
     # Choose a package name and obtain verbose version information
     sudo dpkg --status microsoft-mlserver-packages-r-9.4.7
     # Turn off anonymous telemtry for MS ML Server
-    sudo mlserver-python -c 'import revoscalepy; revoscalepy.rx_privacy_control(False)' && \
+    sudo mlserver-python -c "import revoscalepy; revoscalepy.rx_privacy_control(False)"
     sudo su - -c "R -e \"rxPrivacyControl(TRUE)\""
     }
 
@@ -301,7 +302,7 @@ function install_ms_mlserver_9.4.7_minimal_py_client() {
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ bionic main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
     # Set the location of the package repo the "prod" directory containing the distribution.
     # This example specifies 16.04. Replace with 14.04 if you want that version
-    wget https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
+    wget "https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb"
     # Register the repo
     sudo dpkg -i packages-microsoft-prod.deb
     # Verify whether the "microsoft-prod.list" configuration file exists
@@ -321,7 +322,7 @@ function install_ms_mlserver_9.4.7_minimal_py_client() {
     # Choose a package name and obtain verbose version information
     sudo dpkg --status microsoft-mlserver-packages-r-9.4.7
     # Turn off anonymous telemtry for MS ML Server
-    sudo mlserver-python -c 'import revoscalepy; revoscalepy.rx_privacy_control(False)' && \
+    sudo mlserver-python -c "import revoscalepy; revoscalepy.rx_privacy_control(False)"
     sudo su - -c "R -e \"rxPrivacyControl(TRUE)\""
     }
 
@@ -344,9 +345,9 @@ function install_ms_sql_drivers17() {
     apt-get install -y --no-install-recommends unixodbc-dev
     # Get JDBC Driver
     cd /opt/microsoft && mkdir -p msjdbcsql7 && cd msjdbcsql7
-    wget https://github.com/Microsoft/mssql-jdbc/releases/download/v7.2.1/mssql-jdbc-7.2.1.jre8.jar
+    wget "https://github.com/Microsoft/mssql-jdbc/releases/download/v7.2.1/mssql-jdbc-7.2.1.jre8.jar"
     
-    printf '
+    printf "
     [ODBC Driver 17 for SQL Server]
     Description=Microsoft ODBC Driver 17 for SQL Server
     Driver=/opt/microsoft/msodbcsql17/lib64/libmsodbcsql-17.2.so.0.1
@@ -356,7 +357,7 @@ function install_ms_sql_drivers17() {
     [JDBC Driver 7 for SQL Server]
     Description=Microsoft JDBC Driver 7 for SQL Server
     Driver=/opt/microsoft/msjdbcsql7/mssql-jdbc-7.2.1.jre8.jar
-    ' >> /etc/odbcinst.ini
+    " >> /etc/odbcinst.ini
     }
 
 
@@ -386,10 +387,10 @@ function install_oracle_sql_drivers12() {
     apt-get install -y curl apt-transport-https unzip
     # Oracle Instantclient
     cd /tmp
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-basic-linux.x64-12.2.0.1.0.zip
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-jdbc-linux.x64-12.2.0.1.0.zip
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-odbc-linux.x64-12.2.0.1.0.zip
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-sdk-linux.x64-12.2.0.1.0.zip
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-basic-linux.x64-12.2.0.1.0.zip"
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-jdbc-linux.x64-12.2.0.1.0.zip"
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-odbc-linux.x64-12.2.0.1.0.zip"
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/instantclient-sdk-linux.x64-12.2.0.1.0.zip"
     apt-get install -y --no-install-recommends libaio1
     unzip instantclient-basic-*
     unzip instantclient-jdbc-*
@@ -409,7 +410,7 @@ function install_oracle_sql_drivers12() {
     echo "export TNS_ADMIN=/opt/oracle/instantclient_12_2" >> /home/$USER/.bashrc
     echo "export ORACLE_HOME=/opt/oracle/instantclient_12_2" >> /home/$USER/.bashrc
 
-    printf '
+    printf "
     [Oracle 12.2 ODBC driver]
     Description=Oracle ODBC driver for Oracle 12.2
     Driver = /opts/oracle/instantclient_12_2/ojdbc8.jar
@@ -417,7 +418,7 @@ function install_oracle_sql_drivers12() {
     [Oracle 12.2 JDBC driver]
     Description=Oracle JDBC driver for Oracle 12.2
     Driver = /opts/oracle/instantclient_12_2/orai18n.jar
-    ' >> /etc/odbcinst.ini
+    " >> /etc/odbcinst.ini
     }
 
 
@@ -426,7 +427,7 @@ function install_teradata_drivers16() {
     echo "Installing Teradata ODBC and JDBC Drivers v16.20"
     # Teradata ODBC                                                                                                                   # TD
     cd /tmp
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/tdodbc1620__ubuntu_indep.16.20.00.79-1.tar.gz
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/tdodbc1620__ubuntu_indep.16.20.00.79-1.tar.gz"
     tar -xf tdodbc1620*.tar.gz
     sudo apt-get -f install -y --no-install-recommends lib32stdc++6 lib32gcc1 libc6-i386
     cd /tmp/tdodbc1620
@@ -436,13 +437,13 @@ function install_teradata_drivers16() {
     cd /tmp
     mkdir -p /opt/teradata
     mkdir -p jdbc
-    wget https://s3.amazonaws.com/stuff-for-devops/dbdrivers/TeraJDBC__indep_indep.16.20.00.13.zip
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/TeraJDBC__indep_indep.16.20.00.13.zip"
     unzip TeraJDBC*.zip
     rm TeraJDBC*.zip
     cd ..
     sudo mv jdbc /opt/teradata   
 
-    printf '
+    printf "
     [Teradata ODBC Driver 16.20]
     Description=Teradata Database ODBC Driver 16.20
     Driver=/opt/teradata/client/ODBC_64/lib/tdataodbc_sb64.so
@@ -451,7 +452,7 @@ function install_teradata_drivers16() {
     [Teradata JDBC Driver 4]
     Description=Teradata Database JDBC Driver 4
     Driver=/opt/teradata/jdbc/terajdbc4.jar
-    ' >> /etc/odbcinst.ini
+    " >> /etc/odbcinst.ini
     }
 
 
@@ -464,7 +465,7 @@ function install_vbox_vagrant() {
 function install_vmware_vagrant() {
     echo "VMWare is better if you pay for it. Vagrant makes it even better."
     cd /tmp
-    wget https://download3.vmware.com/software/player/file/VMware-Player-15.5.1-15018445.x86_64.bundle
+    wget "https://download3.vmware.com/software/player/file/VMware-Player-15.5.1-15018445.x86_64.bundle"
     sudo bash VMWare-Player*.bundle
     sudo apt-get install -yvagrant dkms
     }
@@ -477,11 +478,11 @@ function install_common_gui() {
     echo "Installing some common GUI packages"
     sudo apt-get update
     sudo apt-get install -y --no-install-recommends \
-        guake `Drop-down terminal` \
-        devhelp zeal `Documentation for coding` \
-        firefox chromium-browser install_chrome `various browsers` \
-        slack `communication`\
-        transmission `torrents client`
+        guake \
+        devhelp zeal \
+        firefox chromium-browser install_chrome \
+        slack \
+        transmission
 }
 
 
@@ -490,7 +491,7 @@ function install_azdatastudio() {
     echo "Ah Azure Data Studio. So much nicer than that MSSSMS business. Code, don't right-click!"
     echo "Oh yeah, MSSSMS isn't available for Linux anyway."
     sudo apt-get -y install libxss1 libgconf-2-4 libunwind8 
-    cd /tmp && wget https://azuredatastudiobuilds.blob.core.windows.net/releases/1.13.1/azuredatastudio-linux-1.13.1.deb
+    cd /tmp && wget "https://azuredatastudiobuilds.blob.core.windows.net/releases/1.13.1/azuredatastudio-linux-1.13.1.deb"
     sudo dpkg -i azuredatastudio-linux-1.13.1.deb
     }
 
@@ -498,8 +499,8 @@ function install_azdatastudio() {
 # chrome
 function install_chrome() {
     echo "Gotta have Chrome. But beware. It is slow as death on Linux inside of a VM guest!"
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-    sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    wget -q -O - "https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+    sudo sh -c "echo "deb [arch=amd64] \"http://dl.google.com/linux/chrome/deb/ stable main\" >> /etc/apt/sources.list.d/google.list"
     sudo apt-get update 
     sudo apt-get install -y google-chrome-stable
     }
@@ -508,9 +509,9 @@ function install_chrome() {
 # dbeaver
 function install_dbeaver() {
     echo "DBeaver, you're kind of ugly. But I like you."
-    wget -O - https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
-    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+    wget -O - "https://dbeaver.io/debs/dbeaver.gpg.key" | sudo apt-key add -
+    echo "deb https://dbeaver.io/debs/dbeaver-ce" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+    #sudo add-apt-repository ppa:serge-rider/dbeaver-ce
     sudo apt-get update
     sudo apt-get install -y dbeaver-ce
     }
@@ -520,7 +521,7 @@ function install_dbeaver() {
 function install_freeoffice() {
     echo "Meh. It's an office suite."
     sudo apt-get remove libre-office # if installed
-    cd /tmp && wget https://www.softmaker.net/down/softmaker-freeoffice-2018_973-01_amd64.deb
+    cd /tmp && wget "https://www.softmaker.net/down/softmaker-freeoffice-2018_973-01_amd64.deb"
     sudo dpkg -i softmaker-freeoffice*.deb
     sudo /usr/share/freeoffice2018/add_apt_repo.sh
     }
@@ -529,7 +530,7 @@ function install_freeoffice() {
 #postman
 function install_postman() {
     echo "Postman. APIs are so much fun!"
-	cd /tmp && wget https://dl.pstmn.io/download/latest/linux64 -O postman-linux-x64.tar.gz
+	cd /tmp && wget "https://dl.pstmn.io/download/latest/linux64" -O postman-linux-x64.tar.gz
 	sudo tar -xvzf postman-linux-x64.tar.gz -C /opt
 	mkdir ~/.local/share/applications && touch ~/.local/share/applications/postman2.desktop
 	printf '[Desktop Entry]
@@ -550,7 +551,7 @@ function install_postman() {
 # pycharm
 function install_pycharm() {
     echo "PyCharm. JetBrains? What kind of name is that?"
-    cd /tmp && wget https://download.jetbrains.com/python/pycharm-community-2019.3.tar.gz -O pycharm-community-2019.3.tar.gz
+    cd /tmp && wget "https://download.jetbrains.com/python/pycharm-community-2019.3.tar.gz" -O pycharm-community-2019.3.tar.gz
     sudo tar xfz pycharm-*.tar.gz -C /opt/
     cd /opt/pycharm-*/bin && ./pycharm.sh
     }
@@ -559,7 +560,7 @@ function install_pycharm() {
 # spotify
 function install_spotify() {
     echo "Dooo dooo dooo dooo dooo... Spotify"
-    curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add - 
+    curl -sS "https://download.spotify.com/debian/pubkey.gpg" | sudo apt-key add - 
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
     sudo apt-get update && sudo apt-get install -y spotify-client
     }
@@ -568,7 +569,7 @@ function install_spotify() {
 # Sublime text
 function install_sublimetext() {
     echo "Sublime Text 3. An oldie-but-goodie."
-    wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    wget -qO - "https://download.sublimetext.com/sublimehq-pub.gpg" | sudo apt-key add -
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
     sudo apt-get update
     sudo apt-get install -y sublime-text
@@ -578,10 +579,10 @@ function install_sublimetext() {
 # vs code
 function install_vscode() {
     echo "Visual Studio Code. sudo apt-get install -yvscodium if you prefer the open-source version."
-    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    curl "https://packages.microsoft.com/keys/microsoft.asc" | gpg --dearmor > microsoft.gpg
     sudo install -o root -g root -m 644 microsoft.gpg /etc/apt/trusted.gpg.d/
     sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-    sudo apt-get install -yapt-transport-https
+    sudo apt-get install -y apt-transport-https
     sudo apt-get update
     sudo apt-get install -y code
     }
