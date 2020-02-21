@@ -481,8 +481,16 @@ function install_common_gui() {
         guake \
         devhelp zeal \
         firefox chromium-browser install_chrome \
-        slack \
+        install_slack \
         transmission
+}
+
+function install_slack() {
+    echo "Installing Slack from .deb"
+    sudo apt-get update
+    sudo apt-get install gconf2 libappindicator1 libdbusmenu-gtk4
+    cd /tmp && wget "https://downloads.slack-edge.com/linux_releases/slack-desktop-4.3.2-amd64.deb"
+    sudo dpkg -i slack-desktop*.deb
 }
 
 
