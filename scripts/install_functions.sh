@@ -436,13 +436,16 @@ function install_teradata_drivers16() {
     # Teradata JDBC
     cd /tmp
     mkdir -p /opt/teradata
-    mkdir -p jdbc
-    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/TeraJDBC__indep_indep.16.20.00.13.zip"
+    mkdir -p /opt/teradata/jdbc
+    wget "https://s3.amazonaws.com/stuff-for-devops/dbdrivers/Teradata/TeraJDBC__indep_indep.16.20.00.13.zip"
     unzip TeraJDBC*.zip
     rm TeraJDBC*.zip
-    cd ..
-    sudo mv jdbc /opt/teradata   
-
+    sudo mv terajdbc4.jar /opt/teradata/jdbc/
+    wget "https://stuff-for-devops.s3.amazonaws.com/dbdrivers/Teradata/tdodbc1620__ubuntu_indep.16.20.00.90-1.tar.gz"
+    sudo tar -xvf tdodbc1620*.tar.gz
+    cd tdodbc1620
+    sudo dpkg -i tdodbc*noarch.deb
+    
     printf "
     [Teradata ODBC Driver 16.20]
     Description=Teradata Database ODBC Driver 16.20
