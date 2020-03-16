@@ -332,17 +332,27 @@ function install_ms_sql_drivers17() {
     echo "Installing Microsoft SQL Server ODBC Driver v17 and JDBC Driver v7"
     # Build Deps
     apt-get update -y
-    apt-get install -y curl apt-transport-https
+    apt-get install -y sudo curl wget apt-transport-https gnupg gnupg1 gnupg2
     # MS SQL Server Drivers
-    cd /tmp && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-    curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/microsoft-prod.list
-    apt-get update -y
-    ACCEPT_EULA=Y apt-get install -y --no-install-recommends msodbcsql17
+    sudo curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+    #Download appropriate package for the OS version
+    #Choose only ONE of the following, corresponding to your OS version
+    #Ubuntu 16.04
+    #curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+    #Ubuntu 18.04
+    sudo curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+    #Ubuntu 19.10
+    #curl https://packages.microsoft.com/config/ubuntu/19.10/prod.list > /etc/apt/sources.list.d/mssql-release.list
+    #exit
+    sudo apt-get update
+    sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17
     # optional: for bcp and sqlcmd
-    ACCEPT_EULA=Y apt-get install -y --no-install-recommends mssql-tools
-    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> /home/$USER/.bashrc
+    sudo ACCEPT_EULA=Y apt-get install mssql-tools
+    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+    echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+    source ~/.bashrc
     # optional: for unixODBC development headers
-    apt-get install -y --no-install-recommends unixodbc-dev
+    sudo apt-get install -y unixodbc-dev
     # Get JDBC Driver
     cd /opt/microsoft && mkdir -p msjdbcsql7 && cd msjdbcsql7
     wget "https://github.com/Microsoft/mssql-jdbc/releases/download/v7.2.1/mssql-jdbc-7.2.1.jre8.jar"
