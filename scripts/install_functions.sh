@@ -220,17 +220,31 @@ function install_anaconda3() {
     echo "You use Python too? Python 3 I hope!"
     echo "Note that we're installing in /opt/anaconda3 instead of /home/youruser/anaconda3"
     echo "This makes it available to everyone in multi-user situations."
-    cd /tmp && wget "https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh -O Anaconda3-2019.10-Linux-x86_64.sh"
+    cd /tmp && wget "https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh" -O Anaconda3-2019.10-Linux-x86_64.sh
     echo "46d762284d252e51cd58a8ca6c8adc9da2eadc82c342927b2f66ed011d1d8b53" Anaconda3-2019.10-Linux-x86_64.sh | sha256sum -c -
-    sudo mkdir /opt/anaconda3
-    bash Anaconda3-2019.10-Linux-x86_64.sh -b /opt/anaconda3
+    sudo mkdir -p /opt/anaconda3
+    sudo bash Anaconda3-2019.10-Linux-x86_64.sh -b /opt/anaconda3/
     sudo chown -R $USER:$USER /opt/anaconda3
-    echo "export PATH=$PATH:/opt/anaconda3/bin" >> ~/.bashrc
+    export PATH=$PATH:/opt/anaconda3/bin
+    echo "export PATH=\$PATH:/opt/anaconda3/bin" >> ~/.bashrc
     source ~/.bashrc
     conda update conda
     conda update anaconda
     }
 
+# azure cli
+function install_azcli() {
+    sudo apt-get update
+    sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+    curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | \
+      sudo tee /etc/apt/trusted.gpg.d/microsoft.asc.gpg > /dev/null
+    AZ_REPO=$(lsb_release -cs)
+    echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+      sudo tee /etc/apt/sources.list.d/azure-cli.list
+    sudo apt-get update
+    sudo apt-get install azure-cli
+    az login
+    }
 
 # docker
 function install_docker() {
@@ -250,7 +264,7 @@ function install_docker() {
     sudo apt-get update
     sudo apt-get install -y docker-ce
     sudo usermod -aG docker $USER
-    sudo newgrp docker
+    newgrp docker
     }
 
 
