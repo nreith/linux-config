@@ -163,9 +163,7 @@ function install_common_cli() {
         file \
         iputils-ping \
         nano \
-        neovim \ 
-        net-tools \
-	pass \
+        neovim \
         python-pip \
         rsync \
         screenfetch neofetch \
@@ -485,7 +483,8 @@ function install_teradata_drivers16() {
 
 function install_vbox_vagrant() {
     echo "Virtualbox is better with Vagrant."
-    virtualbox vagrant dkms
+    sudo apt-get update    
+    sudo apt-get install -y virtualbox vagrant dkms
     }
 
 
@@ -507,9 +506,10 @@ function install_common_gui() {
     sudo apt-get install -y --no-install-recommends \
         guake \
         devhelp zeal \
-        firefox chromium-browser install_chrome \
-        install_slack \
+        firefox chromium-browser \
         transmission
+    install_chrome
+    install_slack
 }
 
 function install_slack() {
@@ -544,11 +544,10 @@ function install_chrome() {
 # dbeaver
 function install_dbeaver() {
     echo "DBeaver, you're kind of ugly. But I like you."
-    wget -O - "https://dbeaver.io/debs/dbeaver.gpg.key" | sudo apt-key add -
-    echo "deb https://dbeaver.io/debs/dbeaver-ce" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-    #sudo add-apt-repository ppa:serge-rider/dbeaver-ce
-    sudo apt-get update
-    sudo apt-get install -y dbeaver-ce
+    sudo apt-get install -y openjdk-8-jre-headless openjdk-11-jre-headless openjdk-11-jdk-headless
+    sudo apt-get --fix-broken -y install
+    cd /tmp && wget https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
+    sudo dpkg -i dbeaver-ce_latest_amd64.deb
     }
 
 
@@ -567,7 +566,7 @@ function install_postman() {
     echo "Postman. APIs are so much fun!"
 	cd /tmp && wget "https://dl.pstmn.io/download/latest/linux64" -O postman-linux-x64.tar.gz
 	sudo tar -xvzf postman-linux-x64.tar.gz -C /opt
-	mkdir ~/.local/share/applications && touch ~/.local/share/applications/postman2.desktop
+	mkdir -p ~/.local/share/applications && touch ~/.local/share/applications/postman2.desktop
 	printf '[Desktop Entry]
 	Name=Postman
 	GenericName=API Client
