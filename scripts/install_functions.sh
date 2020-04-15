@@ -221,7 +221,7 @@ function install_anaconda3() {
     cd /tmp && wget "https://repo.anaconda.com/archive/Anaconda3-2019.10-Linux-x86_64.sh" -O Anaconda3-2019.10-Linux-x86_64.sh
     echo "46d762284d252e51cd58a8ca6c8adc9da2eadc82c342927b2f66ed011d1d8b53" Anaconda3-2019.10-Linux-x86_64.sh | sha256sum -c -
     sudo mkdir -p /opt/anaconda3
-    sudo bash Anaconda3-2019.10-Linux-x86_64.sh -b /opt/anaconda3/
+    sudo bash Anaconda3-2019.10-Linux-x86_64.sh -b -u /opt/anaconda3/
     sudo chown -R $USER:$USER /opt/anaconda3
     export PATH=$PATH:/opt/anaconda3/bin
     echo "export PATH=\$PATH:/opt/anaconda3/bin" >> ~/.bashrc
@@ -240,7 +240,7 @@ function install_azcli() {
     echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
       sudo tee /etc/apt/sources.list.d/azure-cli.list
     sudo apt-get update
-    sudo apt-get install azure-cli
+    sudo apt-get install -y azure-cli
     az login
     }
 
